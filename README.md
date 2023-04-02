@@ -7,3 +7,9 @@ Implement a basic API throttling system from scratch, which serves HTTP(S) reque
 => LIMIT - Number of requests allowed.
 => COOKIELIFE - Cookie validity time.
 
+#  Calling the API 
+The API is currently configured in 
+http://localhost:3000/throttle/resluts
+
+The result page of the API is designed to throttle for 3 (LIMIT )requests per sec(COOKIELIFE 6000Ms)
+ Once the API throttles API ‘ll send  status of 429(Too many requests along with a Retry-after header with a lock period info). 

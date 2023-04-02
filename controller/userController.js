@@ -14,7 +14,7 @@ const getResults = (req, res) => {
     console.log(currentRequestCount);
     console.log( `Cookies ${Cookies} requestCount: ${requestCount} `);
     if(currentRequestCount>=process.env.LIMIT){
-res.status(429).cookie('cookieCounter',requestCount++,{maxAge:process.env.COOKIELIFE}).send('Maximum limit exceeds');
+res.status(429).setHeader("Retry-After",process.env.COOKIELIFE).cookie('cookieCounter',requestCount++,{maxAge:process.env.COOKIELIFE}).send('Too many requests');
     }else{
         res.cookie('cookieCounter',requestCount++,{maxAge:process.env.COOKIELIFE}).send(`Welcome`);
     }
