@@ -1,5 +1,6 @@
 const req = require("express/lib/request")
-const res = require("express/lib/response")
+const res = require("express/lib/response");
+const { dirs } = require("nodemon/lib/config");
 var requestCount = 1;
 
 
@@ -11,12 +12,12 @@ const getResults = (req, res) => {
     }else{
         requestCount = 1;
     }
-    console.log(currentRequestCount);
-    console.log( `Cookies ${Cookies} requestCount: ${requestCount} `);
+    console.log( ` requestCount: ${currentRequestCount} `);
     if(currentRequestCount>=process.env.LIMIT){
-res.status(429).setHeader("Retry-After",process.env.COOKIELIFE).cookie('cookieCounter',requestCount++,{maxAge:process.env.COOKIELIFE}).send('Too many requests');
-    }else{
-        res.cookie('cookieCounter',requestCount++,{maxAge:process.env.COOKIELIFE}).send(`Welcome`);
+res.status(429).setHeader("Retry-After",process.env.COOKIELIFE).cookie('cookieCounter',requestCount++,{maxAge:process.env.COOKIELIFE}).sendFile(__dirname+'/htmlResponses/errorPage.html');
+console.log( `XXXXXXXXXXXXX Request blocked XXXXXXXXXXXXXXXXXX`);
+}else{
+        res.cookie('cookieCounter',requestCount++,{maxAge:process.env.COOKIELIFE}).sendFile(__dirname+'/htmlResponses/resultPage.html');
     }
 };
 module.exports = {getResults};
